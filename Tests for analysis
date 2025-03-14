@@ -1,0 +1,27 @@
+import pytest
+from src.transaction import TransactionAnalyzer
+
+@pytest.fixture
+def transactions_data():
+    # Пример транзакций
+    return [
+        {"from": "0xADDRESS1", "to": "0xADDRESS2", "value": "100"},
+        {"from": "0xADDRESS1", "to": "0xADDRESS3", "value": "200"},
+        {"from": "0xADDRESS2", "to": "0xADDRESS3", "value": "150"},
+        {"from": "0xADDRESS1", "to": "0xADDRESS4", "value": "50"}
+    ]
+
+def test_filter_by_value(transactions_data):
+    analyzer = TransactionAnalyzer(transactions_data)
+    filtered = analyzer.filter_by_value(100)
+    assert len(filtered) == 3  # Ожидаем, что будет отфильтровано 3 транзакции
+
+def test_filter_by_sender(transactions_data):
+    analyzer = TransactionAnalyzer(transactions_data)
+    filtered = analyzer.filter_by_sender("0xADDRESS1")
+    assert len(filtered) == 3  # Ожидаем, что будут транзакции от адреса 0xADDRESS1
+
+def test_analyze_transaction_patterns(transactions_data):
+    analyzer = TransactionAnalyzer(transactions_data)
+    patterns = analyzer.analyze_transaction_patterns()
+    assert "0xADDRESS1" in patterns  # Ожидаем, что адрес 0xADDRESS1 встречается в паттернах
