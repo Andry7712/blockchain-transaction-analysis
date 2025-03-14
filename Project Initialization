@@ -1,0 +1,16 @@
+blockchain-transactions-analyzer/
+│
+├── data/
+│   ├── transactions.json
+│
+├── src/
+│   ├── __init__.py
+│   ├── blockchain.py
+│   ├── transaction.py
+│
+├── tests/
+│   ├── test_blockchain.py
+│   ├── test_transaction.py
+│
+├── requirements.txt
+└── README.md
