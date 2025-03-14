@@ -1,0 +1,23 @@
+import pandas as pd
+
+class TransactionAnalyzer:
+    def __init__(self, transactions):
+        self.transactions = transactions
+        self.df = pd.DataFrame(transactions)
+
+    def filter_by_value(self, min_value):
+        """ Фильтровать транзакции по минимальной стоимости """
+        self.df['value'] = pd.to_numeric(self.df['value'], errors='coerce')
+        return self.df[self.df['value'] >= min_value]
+
+    def filter_by_sender(self, sender_address):
+        """ Фильтровать транзакции по отправителю """
+        return self.df[self.df['from'] == sender_address]
+
+    def analyze_transaction_patterns(self):
+        """ Простой анализ паттернов транзакций (например, по частоте) """
+        return self.df['from'].value_counts()
+
+    def get_top_senders(self, top_n=5):
+        """ Получить топ-N отправителей по количеству транзакций """
+        return self.df['from'].value_counts().head(top_n)
