@@ -1,0 +1,11 @@
+import pytest
+from src.blockchain import Blockchain
+
+@pytest.fixture
+def blockchain():
+    return Blockchain("https://api.blockchair.com/ethereum/")
+
+def test_get_transactions(blockchain):
+    transactions = blockchain.get_transactions("0xADDRESS", limit=2)
+    assert len(transactions) == 2  # Ожидаем, что будет получено 2 транзакции
+    assert isinstance(transactions, list)
