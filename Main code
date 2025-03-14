@@ -1,0 +1,30 @@
+import requests
+import json
+
+class Blockchain:
+    def __init__(self, api_url):
+        self.api_url = api_url
+
+    def get_transactions(self, address, limit=10):
+        """ Получить последние транзакции для заданного адреса """
+        url = f"{self.api_url}/address/{address}/transactions"
+        params = {"limit": limit}
+
+        try:
+            response = requests.get(url, params=params)
+            response.raise_for_status()
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            print(f"Ошибка при получении данных: {e}")
+            return []
+
+    def get_block_data(self, block_number):
+        """ Получить информацию о блоке по номеру """
+        url = f"{self.api_url}/block/{block_number}"
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            print(f"Ошибка при получении данных о блоке: {e}")
+            return {}
